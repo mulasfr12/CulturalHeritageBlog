@@ -9,5 +9,6 @@ namespace WebAPI.Services.Interfaces
         Task<int> CreateCulturalHeritage(CulturalHeritageDto heritageDto);
         Task<bool> UpdateCulturalHeritage(int heritageId, CulturalHeritageDto heritageDto);
         Task<bool> DeleteCulturalHeritage(int heritageId);
+        Task<IEnumerable<CulturalHeritageDto>> SearchCulturalHeritages(string name);
     }
 }

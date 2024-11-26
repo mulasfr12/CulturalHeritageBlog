@@ -33,13 +33,16 @@ namespace WebAPI.Services
             // Hash the password
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
 
+            // Determine the role (default to "User" if none is provided)
+            var role = string.IsNullOrEmpty(registerDto.Role) ? "User" : registerDto.Role;
+
             // Create and add the user to the database
             var user = new User
             {
                 Username = registerDto.Username,
                 Email = registerDto.Email,
                 PasswordHash = hashedPassword,
-                Role = "User", // Default role
+                Role = role, // Assign the role
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -47,6 +50,7 @@ namespace WebAPI.Services
             await _dbContext.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<string> LoginUser(UserLoginDto loginDto)
         {
@@ -80,11 +84,12 @@ namespace WebAPI.Services
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Username),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role) // Include user role in the token
-            };
+        new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.Name, user.Username),
+        new Claim(ClaimTypes.Role, user.Role), // Include the user's role
+        new Claim("UserID", user.UserId.ToString()) // Add UserID claim
+    };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

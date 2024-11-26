@@ -19,7 +19,7 @@ namespace WebAPI.Services
             return await _dbContext.Themes
                 .Select(t => new ThemeDto
                 {
-                    ThemeID = t.ThemeId,
+                    ThemeID = t.ThemeID,
                     Name = t.Name,
                     Description = t.Description
                 })
@@ -33,7 +33,7 @@ namespace WebAPI.Services
 
             return new ThemeDto
             {
-                ThemeID = theme.ThemeId,
+                ThemeID = theme.ThemeID,
                 Name = theme.Name,
                 Description = theme.Description
             };
@@ -50,7 +50,7 @@ namespace WebAPI.Services
             _dbContext.Themes.Add(theme);
             await _dbContext.SaveChangesAsync();
 
-            return theme.ThemeId;
+            return theme.ThemeID;
         }
 
         public async Task<bool> UpdateTheme(int themeId, ThemeDto themeDto)

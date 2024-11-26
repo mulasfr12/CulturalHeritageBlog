@@ -74,22 +74,25 @@ public partial class CulturalHeritageDbContext : DbContext
 
         modelBuilder.Entity<CulturalHeritageTheme>(entity =>
         {
-            entity.HasKey(e => new { e.HeritageId, e.ThemeId }).HasName("PK__Cultural__AC7A7B5D487625F6");
-
+            // Explicitly map the table name to "CulturalHeritageTheme"
             entity.ToTable("CulturalHeritageTheme");
 
-            entity.Property(e => e.HeritageId).HasColumnName("HeritageID");
-            entity.Property(e => e.ThemeId).HasColumnName("ThemeID");
+            // Configure the composite primary key
+            entity.HasKey(ct => new { ct.HeritageId, ct.ThemeId });
 
-            entity.HasOne(d => d.Heritage).WithMany(p => p.CulturalHeritageThemes)
-                .HasForeignKey(d => d.HeritageId)
-                .HasConstraintName("FK__CulturalH__Herit__4316F928");
+            // Configure relationships
+            entity.HasOne(ct => ct.Heritage)
+                .WithMany(ch => ch.CulturalHeritageThemes)
+                .HasForeignKey(ct => ct.HeritageId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_CulturalHeritageTheme_CulturalHeritage");
 
-            entity.HasOne(d => d.Theme).WithMany(p => p.CulturalHeritageThemes)
-                .HasForeignKey(d => d.ThemeId)
-                .HasConstraintName("FK__CulturalH__Theme__440B1D61");
+            entity.HasOne(ct => ct.Theme)
+                .WithMany(t => t.CulturalHeritageThemes)
+                .HasForeignKey(ct => ct.ThemeId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_CulturalHeritageTheme_Theme");
         });
-
         modelBuilder.Entity<HeritageImage>(entity =>
         {
             entity.HasKey(e => e.ImageId).HasName("PK__Heritage__7516F4ECCB54019B");
@@ -127,13 +130,13 @@ public partial class CulturalHeritageDbContext : DbContext
 
         modelBuilder.Entity<Theme>(entity =>
         {
-            entity.HasKey(e => e.ThemeId).HasName("PK__Theme__FBB3E4B9F4118FF9");
+            entity.HasKey(e => e.ThemeID).HasName("PK__Theme__FBB3E4B9F4118FF9");
 
             entity.ToTable("Theme");
 
             entity.HasIndex(e => e.Name, "UQ__Theme__737584F65DE0B1FE").IsUnique();
 
-            entity.Property(e => e.ThemeId).HasColumnName("ThemeID");
+            entity.Property(e => e.ThemeID).HasColumnName("ThemeID");
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(100);
         });

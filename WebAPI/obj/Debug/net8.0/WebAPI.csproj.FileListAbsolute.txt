@@ -139,3 +139,4 @@ C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.p
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.genruntimeconfig.cache
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\ref\WebAPI.dll
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.sourcelink.json
