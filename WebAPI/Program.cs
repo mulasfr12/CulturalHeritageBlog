@@ -69,9 +69,18 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 
 
 var app = builder.Build();
+app.UseStaticFiles();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -83,7 +92,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 

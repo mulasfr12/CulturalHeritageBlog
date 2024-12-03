@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f9;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logs-container {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+            .logs-container h2 {
+                text-align: center;
+            }
+
+            .logs-container select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .logs-container table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+                .logs-container table th, .logs-container table td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                }
+
+                .logs-container table th {
+                    background-color: #007BFF;
+                    color: white;
+                }
+
+        .logout-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #FF4D4F;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .logout-btn:hover {
+                background-color: #cc0000;
+            }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Log Viewer</h1>
+    </div>
+    <div class="logs-container">
+        <h2>Logs</h2>
+        <select id="logCount" onchange="fetchLogs()">
+            <option value="10" selected>Last 10 logs</option>
+            <option value="25">Last 25 logs</option>
+            <option value="50">Last 50 logs</option>
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>Log ID</th>
+                    <th>Timestamp</th>
+                    <th>Level</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody id="logsTableBody"></tbody>
+        </table>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+
+    <script>
+        async function fetchLogs() {
+            const logCount = document.getElementById("logCount").value;
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                alert("You are not logged in.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/Log/get/${logCount}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const logs = await response.json();
+                    const logsTableBody = document.getElementById("logsTableBody");
+                    logsTableBody.innerHTML = "";
+
+                    logs.forEach(log => {
+                        const row = `
+                            <tr>
+                                <td>${log.logID}</td>
+                                <td>${new Date(log.timestamp).toLocaleString()}</td>
+                                <td>${log.level || "Info"}</td>
+                                <td>${log.message}</td>
+                            </tr>
+                        `;
+                        logsTableBody.innerHTML += row;
+                    });
+                } else {
+                    alert("Failed to fetch logs.");
+                }
+            } catch (error) {
+                alert("An error occurred while fetching logs.");
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("token");
+            window.location.href = "login.html";
+        }
+
+        // Fetch logs on page load
+        fetchLogs();
+    </script>
+</body>
+</html>

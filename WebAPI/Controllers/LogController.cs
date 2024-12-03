@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Models;
 using WebAPI.Services.Interfaces;
 
 namespace WebAPI.Controllers
@@ -16,7 +18,7 @@ namespace WebAPI.Controllers
             _logServices = logServices;
         }
 
-        [HttpGet("get/{count:int?}")]
+[HttpGet("get/{count:int?}")]
         public async Task<IActionResult> GetLogs(int count = 10) // Default N=10
         {
             var logs = await _logServices.GetLogs(count);

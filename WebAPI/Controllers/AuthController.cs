@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
             _configuration = configuration;
             _userService = userService;
         }
-
+        //('/api/auth/login'
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterDto registerDto)
         {
