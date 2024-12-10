@@ -69,12 +69,21 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowMvcApp",
+//        policy => policy.WithOrigins("http://localhost:5140", "https://localhost:7106") // Ports for MVC project
+//                       .AllowAnyHeader()
+//                       .AllowAnyMethod());
+//});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 
 
 var app = builder.Build();
+//app.UseCors("AllowMvcApp");
 app.UseStaticFiles();
 if (!app.Environment.IsDevelopment())
 {

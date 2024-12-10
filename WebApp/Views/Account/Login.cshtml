@@ -1,0 +1,25 @@
+﻿@using WebApp.ViewModels
+@model LoginViewModel
+
+<h1>Login</h1>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div style="color: red; margin-bottom: 10px;">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<div style="width: 300px; margin: 100px auto; text-align: center;">
+    <h1>Login</h1>
+    <form method="post" action="/Account/Login">
+        <div style="margin-bottom: 15px;">
+            <input type="text" name="Username" placeholder="Username" style="width: 100%; padding: 10px;" required />
+        </div>
+        <div style="margin-bottom: 15px;">
+            <input type="password" name="Password" placeholder="Password" style="width: 100%; padding: 10px;" required />
+        </div>
+        <button type="submit" style="width: 100%; background-color: #007BFF; color: white; padding: 10px; border: none; border-radius: 5px;">Login</button>
+    </form>
+    <p style="margin-top: 20px;">Don't have an account? <a href="/Account/Register">Register here</a>.</p>
+</div>

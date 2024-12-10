@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "User Dashboard";
+}
+
+<h1>Welcome to the User Dashboard</h1>
+<p>Explore cultural heritage and leave comments.</p>
+
+<ul>
+    <li><a href="/CulturalHeritage">View Cultural Heritage</a></li>
+    <li><a href="/Theme">Explore Themes</a></li>
+</ul>
+
+<form method="post" action="/Account/Logout" style="display: inline;" onsubmit="return confirm('Are you sure you want to logout?');">
+    <button type="submit" style="background-color: #007BFF; color: white; padding: 10px; border: none; border-radius: 5px;">
+        Logout
+    </button>
+</form>

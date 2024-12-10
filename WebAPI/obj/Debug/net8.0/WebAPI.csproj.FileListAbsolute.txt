@@ -1,4 +1,5 @@
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\appsettings.json
+C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\WebAPI.staticwebassets.runtime.json
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\WebAPI.staticwebassets.endpoints.json
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\WebAPI.exe
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\WebAPI.deps.json
@@ -7,6 +8,7 @@ C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\WebAPI.d
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\WebAPI.pdb
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\Humanizer.dll
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -121,6 +123,7 @@ C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.A
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.csproj.CoreCompileInputs.cache
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.sourcelink.json
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\scopedcss\bundle\WebAPI.styles.css
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\staticwebassets.development.json
@@ -138,6 +141,3 @@ C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\refint\W
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.pdb
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.genruntimeconfig.cache
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\ref\WebAPI.dll
-C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\BCrypt.Net-Next.dll
-C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.sourcelink.json
-C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\WebAPI.staticwebassets.runtime.json

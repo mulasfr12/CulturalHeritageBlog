@@ -1,0 +1,31 @@
+﻿@using WebApp.ViewModels
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div style="color: red; margin-bottom: 10px;">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<div style="width: 300px; margin: 100px auto; text-align: center;">
+    <h1>Register</h1>
+    <form method="post" action="/Account/Register">
+        <div style="margin-bottom: 15px;">
+            <input type="text" name="Username" placeholder="Username" style="width: 100%; padding: 10px;" required />
+        </div>
+        <div style="margin-bottom: 15px;">
+            <input type="email" name="Email" placeholder="Email" style="width: 100%; padding: 10px;" required />
+        </div>
+        <div style="margin-bottom: 15px;">
+            <input type="password" name="Password" placeholder="Password" style="width: 100%; padding: 10px;" required />
+        </div>
+        <div style="margin-bottom: 15px;">
+            <input type="password" name="ConfirmPassword" placeholder="Confirm Password" style="width: 100%; padding: 10px;" required />
+        </div>
+        <button type="submit" style="width: 100%; background-color: #007BFF; color: white; padding: 10px; border: none; border-radius: 5px;">Register</button>
+    </form>
+    <p style="margin-top: 20px;">Already have an account? <a href="/Account/Login">Login here</a>.</p>
+</div>
