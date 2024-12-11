@@ -38,8 +38,13 @@ namespace WebAPI.Services
                 })
                 .ToListAsync();
         }
+        public async Task<bool> IsNameUniqueAsync(string name, int? id = null)
+        {
+            return !await _dbContext.CulturalHeritages
+                .AnyAsync(ch => ch.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
+                                && (!id.HasValue || ch.HeritageId != id));
+        }
 
-        [HttpGet]
         [HttpGet]
         public async Task<IEnumerable<CulturalHeritageDto>> GetAllCulturalHeritages()
         {
@@ -93,6 +98,7 @@ namespace WebAPI.Services
         [HttpPost]
         public async Task<int> CreateCulturalHeritage(CulturalHeritageDto heritageDto)
         {
+
             var heritage = new CulturalHeritage
             {
                 Name = heritageDto.Name,

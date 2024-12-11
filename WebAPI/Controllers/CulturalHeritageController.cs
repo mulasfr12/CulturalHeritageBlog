@@ -36,10 +36,9 @@ namespace WebAPI.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        [HttpPost]
-        [HttpPost]
         public async Task<IActionResult> CreateCulturalHeritage(CulturalHeritageDto culturalHeritageDto)
         {
+
             try
             {
                 if (User == null || !User.Identity.IsAuthenticated)
@@ -54,6 +53,15 @@ namespace WebAPI.Controllers
                 }
 
                 var userId = int.Parse(userClaim.Value);
+
+                // Check for name uniqueness
+                if (!await _culturalHeritageService.IsNameUniqueAsync(culturalHeritageDto.Name))
+                {
+                    Console.WriteLine("Duplicate name detected: " + culturalHeritageDto.Name);
+                    await _logServices.AddLog($"Attempt to create cultural heritage with a duplicate name: {culturalHeritageDto.Name}.", userId);
+                    return BadRequest(new { message = "A cultural heritage with this name already exists." });
+                }
+
 
                 var heritageId = await _culturalHeritageService.CreateCulturalHeritage(culturalHeritageDto);
 
@@ -76,13 +84,35 @@ namespace WebAPI.Controllers
             }
         }
 
+
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCulturalHeritage(int id, CulturalHeritageDto culturalHeritageDto)
         {
             try
             {
-                var userId = int.Parse(User.Claims.First(c => c.Type == "UserID").Value);
+                if (User == null || !User.Identity.IsAuthenticated)
+                {
+                    return Unauthorized(new { message = "Authentication is required to perform this action." });
+                }
+
+                var userClaim = User.Claims.FirstOrDefault(c => c.Type == "UserID");
+                if (userClaim == null)
+                {
+                    return Unauthorized(new { message = "UserID claim is missing in the token." });
+                }
+
+                var userId = int.Parse(userClaim.Value);
+
+                // Check for name uniqueness, excluding the current entity
+                if (!await _culturalHeritageService.IsNameUniqueAsync(culturalHeritageDto.Name, id))
+                {
+                    Console.WriteLine("Duplicate name detected on update: " + culturalHeritageDto.Name);
+                    await _logServices.AddLog($"Attempt to update cultural heritage with id={id} to a duplicate name: {culturalHeritageDto.Name}.", userId);
+                    return BadRequest(new { message = "A cultural heritage with this name already exists." });
+                }
+
+
                 var result = await _culturalHeritageService.UpdateCulturalHeritage(id, culturalHeritageDto);
 
                 if (!result)
@@ -102,6 +132,7 @@ namespace WebAPI.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCulturalHeritage(int id)

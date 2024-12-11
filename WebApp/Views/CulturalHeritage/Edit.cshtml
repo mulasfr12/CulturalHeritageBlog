@@ -1,0 +1,23 @@
+﻿@model WebApp.ViewModels.CulturalHeritageViewModel
+
+<form method="post">
+    <input type="hidden" name="HeritageID" value="@Model.HeritageID" />
+
+    <label>Name:</label>
+    <input type="text" name="Name" value="@Model.Name" required />
+
+    <label>Description:</label>
+    <textarea name="Description">@Model.Description</textarea>
+
+    <label>Location:</label>
+    <input type="text" name="Location" value="@Model.Location" />
+
+    <label>National Minority:</label>
+    <input type="text" name="NationalMinority" value="@Model.NationalMinority" />
+
+    <button type="submit">Save Changes</button>
+</form>
+<nav>
+    <a href="/CulturalHeritage">View Cultural Heritages</a> |
+    <a href="/Account/Logout">Logout</a>
+</nav>

@@ -13,6 +13,18 @@ namespace WebAPI.Services
         {
             _dbContext = dbContext;
         }
+        public async Task<IEnumerable<ThemeDto>> GetThemesByCulturalHeritage(int heritageId)
+        {
+            return await _dbContext.CulturalHeritageThemes
+                .Where(ct => ct.HeritageId == heritageId)
+                .Select(ct => new ThemeDto
+                {
+                    ThemeID = ct.ThemeId,
+                    Name = ct.Theme.Name,
+                    Description = ct.Description
+                })
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<ThemeDto>> GetAllThemes()
         {

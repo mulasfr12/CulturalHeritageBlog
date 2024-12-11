@@ -1,0 +1,19 @@
+﻿@model WebAPI.DTOs.CulturalHeritageDto
+
+<h1>Delete Cultural Heritage</h1>
+<p>Are you sure you want to delete the cultural heritage "@Model.Name"?</p>
+
+<form method="post" action="@Url.Action("ConfirmDelete", new { id = Model.HeritageID })">
+    <button type="submit">Yes, Delete</button>
+    <a href="@Url.Action("Index")">Cancel</a>
+</form>
+@if (ViewBag.ErrorMessage != null)
+{
+    <div style="color: red; margin-bottom: 10px;">
+        @ViewBag.ErrorMessage
+    </div>
+}
+<nav>
+    <a href="/CulturalHeritage">View Cultural Heritages</a> |
+    <a href="/Account/Logout">Logout</a>
+</nav>

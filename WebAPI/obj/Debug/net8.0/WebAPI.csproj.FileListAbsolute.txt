@@ -141,3 +141,5 @@ C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\refint\W
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.pdb
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\WebAPI.genruntimeconfig.cache
 C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\obj\Debug\net8.0\ref\WebAPI.dll
+C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\salum\Documents\Cultural_Heritage_Blog\WebAPI\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

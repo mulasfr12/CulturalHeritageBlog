@@ -19,6 +19,8 @@ builder.Services.AddScoped<IThemeService, ThemeService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<ILogServices, LogService>();
 builder.Services.AddScoped<IThemeService, ThemeService>();
+builder.Services.AddScoped<INationalMinorityService, NationalMinorityService>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
