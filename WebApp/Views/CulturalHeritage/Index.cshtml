@@ -1,69 +1,75 @@
 ﻿@model WebApp.ViewModels.CulturalHeritageListViewModel
 
-<h1>Cultural Heritage Management</h1>
+@{
+    ViewData["Title"] = "Cultural Heritage Management";
+}
 
-<form method="get">
-    <input type="text" name="search" placeholder="Search by name" value="@Model.Search" />
-    <select name="nationalMinority">
-        <option value="">-- Select National Minority --</option>
-        @foreach (var minority in Model.NationalMinorities)
-        {
-            if (Model.NationalMinority == minority.MinorityID)
-            {
-                <option value="@minority.MinorityID" selected>@minority.Name</option>
-            }
-            else
-            {
-                <option value="@minority.MinorityID">@minority.Name</option>
-            }
-        }
-    </select>
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-primary">Cultural Heritage Management</h1>
 
+    <!-- Search Form -->
+    <form method="get" class="row mb-4">
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="search" placeholder="Search by name" value="@Model.Search" />
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" name="nationalMinority">
+                <option value="">-- Select National Minority --</option>
+                @foreach (var minority in Model.NationalMinorities)
+                {
+                    <option value="@minority.MinorityID" selected="@(Model.NationalMinority == minority.MinorityID)">@minority.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="@Url.Action("Create")" class="btn btn-success">Add New Cultural Heritage</a>
+        </div>
+    </form>
 
-    <button type="submit">Search</button>
-</form>
-
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>National Minority</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var heritage in Model.Heritages)
-        {
+    <!-- Data Table -->
+    <table class="table table-striped table-bordered shadow-sm">
+        <thead class="table-dark">
             <tr>
-                <td>@heritage.Name</td>
-                <td>@heritage.Description</td>
-                <td>@heritage.Location</td>
-                <td>@heritage.NationalMinorityName</td>
-                <td>
-                    <a href="@Url.Action("Edit", new { id = heritage.HeritageID })">Edit</a> |
-                    <a href="@Url.Action("Delete", new { id = heritage.HeritageID })">Delete</a>
-                </td>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>National Minority</th>
+                <th>Actions</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var heritage in Model.Heritages)
+            {
+                <tr>
+                    <td>@heritage.Name</td>
+                    <td>@heritage.Description</td>
+                    <td>@heritage.Location</td>
+                    <td>@heritage.NationalMinorityName</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = heritage.HeritageID })" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="@Url.Action("Delete", new { id = heritage.HeritageID })" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="text-center">
+        <span>Page @Model.CurrentPage of @Model.TotalPages</span>
+        @if (Model.CurrentPage > 1)
+        {
+            <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })" class="btn btn-secondary btn-sm">Previous</a>
         }
-    </tbody>
-</table>
+        @if (Model.CurrentPage < Model.TotalPages)
+        {
+            <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })" class="btn btn-secondary btn-sm">Next</a>
+        }
+    </div>
 
-<div>
-    Page @Model.CurrentPage of @Model.TotalPages
-    @if (Model.CurrentPage > 1)
-    {
-        <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })">Previous</a>
-    }
-    @if (Model.CurrentPage < Model.TotalPages)
-    {
-        <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })">Next</a>
-    }
+    <!-- Navigation -->
+    <nav class="mt-4 text-center">
+        <a href="/Dashboard/AdminDashboard" class="btn btn-primary">Back to Admin Dashboard</a>      
+    </nav>
 </div>
-
-<p><a href="@Url.Action("Create")">Add New Cultural Heritage</a></p>
-<nav>
-    <a href="/CulturalHeritage">View Cultural Heritages</a> |
-    <a href="/Account/Logout">Logout</a>
-</nav>

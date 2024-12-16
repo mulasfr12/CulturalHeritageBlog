@@ -203,27 +203,34 @@ namespace WebApp.Controllers
         }
 
 
-        [AllowAnonymous] // Accessible to users without admin roles
+        [AllowAnonymous] // Accessible to Users without admin roles
         public async Task<IActionResult> Details(int id)
         {
-            // Fetch cultural heritage by ID
+            // Fetch cultural heritage details
             var heritageDto = await _culturalHeritageService.GetCulturalHeritageById(id);
             if (heritageDto == null)
             {
                 return NotFound();
             }
 
+            // Fetch related themes
+            var themes = await _themeService.GetThemesByCulturalHeritage(id);
+            var mappedThemes = _mapper.Map<List<ThemeViewModel>>(themes);
+
             // Fetch related comments
             var comments = await _commentService.GetCommentsByCulturalHeritageId(id);
+            var mappedComments = _mapper.Map<List<CommentViewModel>>(comments);
 
             // Map to the details view model
             var viewModel = _mapper.Map<CulturalHeritageDetailsViewModel>(heritageDto);
-            viewModel.Comments = _mapper.Map<List<CommentViewModel>>(comments);
+            viewModel.Themes = mappedThemes;
+            viewModel.Comments = mappedComments;
 
-            // Return the details view
+            // Pass the ViewModel to the view
             return View(viewModel);
         }
-        
+
+
     }
 }
 

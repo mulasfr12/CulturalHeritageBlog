@@ -30,6 +30,8 @@ namespace CulturalHeritageWebApp.Mappings
             CreateMap<CulturalHeritageDto, CulturalHeritageDetailsViewModel>()
     .ForMember(dest => dest.NationalMinorityName, opt => opt.MapFrom(src => src.NationalMinorityName))
     .ReverseMap();
+            CreateMap<User, UserProfileViewModel>().ReverseMap();
+            CreateMap<UserProfileViewModel, UpdateUserProfileDto>().ReverseMap();
         }
     }
 }

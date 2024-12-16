@@ -457,5 +457,31 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebAPI.Controllers.UserProfileController",
+    "Method": "GetProfile",
+    "RelativePath": "api/UserProfile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebAPI.Controllers.UserProfileController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/UserProfile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "profileDto",
+        "Type": "WebAPI.DTOs.UpdateUserProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

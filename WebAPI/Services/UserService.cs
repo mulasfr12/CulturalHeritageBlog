@@ -103,5 +103,38 @@ namespace WebAPI.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        public async Task<User> GetUserById(int userId)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        }
+
+        public async Task<bool> UpdateUserProfile(int userId, UpdateUserProfileDto profileDto)
+        {
+            var user = await _dbContext.Users.FindAsync(userId);
+            if (user == null || !VerifyPassword(user.PasswordHash, profileDto.CurrentPassword))
+                return false;
+
+            user.Username = profileDto.Username ?? user.Username;
+            user.Email = profileDto.Email ?? user.Email;
+
+            if (!string.IsNullOrWhiteSpace(profileDto.NewPassword))
+            {
+                user.PasswordHash = HashPassword(profileDto.NewPassword);
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        private string HashPassword(string password)
+        {
+            // Implement password hashing logic
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        private bool VerifyPassword(string hashedPassword, string password)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+        }
     }
 }

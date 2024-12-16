@@ -1,48 +1,49 @@
 ﻿@model WebApp.ViewModels.CulturalHeritageViewModel
 
-<h1>Create Cultural Heritage</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-success">Create Cultural Heritage</h1>
 
-<form method="post">
-    <label>Name:</label>
-    <input type="text" name="Name" value="@Model?.Name" required />
+    <form method="post" class="card p-4 shadow">
+        <div class="mb-3">
+            <label class="form-label">Name:</label>
+            <input type="text" class="form-control" name="Name" value="@Model?.Name" required />
+        </div>
 
-    <label>Description:</label>
-    <textarea name="Description">@Model?.Description</textarea>
+        <div class="mb-3">
+            <label class="form-label">Description:</label>
+            <textarea class="form-control" name="Description" rows="3">@Model?.Description</textarea>
+        </div>
 
-    <label>Location:</label>
-    <input type="text" name="Location" value="@Model?.Location" />
+        <div class="mb-3">
+            <label class="form-label">Location:</label>
+            <input type="text" class="form-control" name="Location" value="@Model?.Location" />
+        </div>
 
-    <label>National Minority:</label>
-    <select name="NationalMinorityID" required>
-        <option value="">-- Select National Minority --</option>
-        @if (ViewBag.NationalMinorities != null)
-        {
-            foreach (var minority in (List<WebApp.ViewModels.NationalMinorityViewModel>)ViewBag.NationalMinorities)
-            {
-                if (Model?.NationalMinorityID == minority.MinorityID)
+        <div class="mb-3">
+            <label class="form-label">National Minority:</label>
+            <select class="form-select" name="NationalMinorityID" required>
+                <option value="">-- Select National Minority --</option>
+                @if (ViewBag.NationalMinorities != null)
                 {
-                    <option value="@minority.MinorityID" selected>@minority.Name</option>
+                    foreach (var minority in (List<WebApp.ViewModels.NationalMinorityViewModel>)ViewBag.NationalMinorities)
+                    {
+                        <option value="@minority.MinorityID" selected="@(Model?.NationalMinorityID == minority.MinorityID)">@minority.Name</option>
+                    }
                 }
-                else
-                {
-                    <option value="@minority.MinorityID">@minority.Name</option>
-                }
-            }
-        }
-    </select>
+            </select>
+        </div>
 
-    <button type="submit">Create</button>
-</form>
+        <button type="submit" class="btn btn-success">Create</button>
+    </form>
 
-@if (ViewBag.ErrorMessage != null)
-{
-    <div style="color: red; margin-bottom: 10px;">
-        @ViewBag.ErrorMessage
-    </div>
-}
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
+    }
 
-
-<nav>
-    <a href="/CulturalHeritage">View Cultural Heritages</a> |
-    <a href="/Account/Logout">Logout</a>
-</nav>
+    <!-- Navigation -->
+    <nav class="mt-4">
+        <a href="/Dashboard/AdminDashboard" class="btn btn-primary">Back to Admin Dashboard</a>
+        <a href="/CulturalHeritage" class="btn btn-secondary">View Cultural Heritages</a>
+    </nav>
+</div>

@@ -1,38 +1,48 @@
 ﻿@model WebApp.ViewModels.ThemeViewModel
 
-<h1>Associate Theme with Cultural Heritage</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-success">Associate Theme with Cultural Heritage</h1>
 
-<form method="post">
-    <label for="heritageId">Select Cultural Heritage:</label>
-    <select id="heritageId" name="heritageId" required>
-        <option value="">-- Select a Cultural Heritage --</option>
-        @if (ViewBag.CulturalHeritages != null)
-        {
-            foreach (var heritage in ViewBag.CulturalHeritages)
-            {
-                <option value="@heritage.HeritageID">@heritage.Name</option>
-            }
-        }
-    </select>
+    <form method="post" class="card p-4 shadow">
+        <div class="mb-3">
+            <label for="heritageId" class="form-label">Select Cultural Heritage:</label>
+            <select id="heritageId" class="form-select" name="heritageId" required>
+                <option value="">-- Select a Cultural Heritage --</option>
+                @if (ViewBag.CulturalHeritages != null)
+                {
+                    foreach (var heritage in ViewBag.CulturalHeritages)
+                    {
+                        <option value="@heritage.HeritageID">@heritage.Name</option>
+                    }
+                }
+            </select>
+        </div>
 
-    <label for="themeId">Select Theme:</label>
-    <select id="themeId" name="themeId" required>
-        <option value="">-- Select a Theme --</option>
-        @if (ViewBag.AllThemes != null)
-        {
-            foreach (var theme in ViewBag.AllThemes)
-            {
-                <option value="@theme.ThemeID">@theme.Name</option>
-            }
-        }
-    </select>
+        <div class="mb-3">
+            <label for="themeId" class="form-label">Select Theme:</label>
+            <select id="themeId" class="form-select" name="themeId" required>
+                <option value="">-- Select a Theme --</option>
+                @if (ViewBag.AllThemes != null)
+                {
+                    foreach (var theme in ViewBag.AllThemes)
+                    {
+                        <option value="@theme.ThemeID">@theme.Name</option>
+                    }
+                }
+            </select>
+        </div>
 
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="3"></textarea>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description" class="form-control" name="description" rows="3"></textarea>
+        </div>
 
-    <button type="submit">Add Theme to Cultural Heritage</button>
-</form>
+        <button type="submit" class="btn btn-success">Add Theme to Cultural Heritage</button>
+    </form>
 
-<nav>
-    <a href="/AdminDashboard">Back to Dashboard</a>
-</nav>
+    <!-- Navigation -->
+    <nav class="mt-4">
+        <a href="/CulturalHeritageThemes" class="btn btn-secondary">Back to Manage Themes</a>
+        <a href="/AdminDashboard" class="btn btn-primary">Back to Admin Dashboard</a>
+    </nav>
+</div>

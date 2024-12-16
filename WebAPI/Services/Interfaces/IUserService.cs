@@ -1,4 +1,5 @@
 ﻿using WebAPI.DTOs;
+using WebAPI.Models;
 
 namespace WebAPI.Services.Interfaces
 {
@@ -7,5 +8,7 @@ namespace WebAPI.Services.Interfaces
         Task<bool> RegisterUser(UserRegisterDto registerDto);
         Task<string> LoginUser(UserLoginDto loginDto);
         Task<bool> ChangePassword(string username, string newPassword);
+        Task<User> GetUserById(int userId);
+        Task<bool> UpdateUserProfile(int userId, UpdateUserProfileDto profileDto);
     }
 }

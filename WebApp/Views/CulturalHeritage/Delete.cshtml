@@ -1,19 +1,21 @@
 ﻿@model WebAPI.DTOs.CulturalHeritageDto
 
-<h1>Delete Cultural Heritage</h1>
-<p>Are you sure you want to delete the cultural heritage "@Model.Name"?</p>
+<div class="container mt-5 text-center">
+    <h1 class="text-danger mb-4">Delete Cultural Heritage</h1>
+    <p class="lead">Are you sure you want to delete the cultural heritage <strong>"@Model.Name"</strong>?</p>
 
-<form method="post" action="@Url.Action("ConfirmDelete", new { id = Model.HeritageID })">
-    <button type="submit">Yes, Delete</button>
-    <a href="@Url.Action("Index")">Cancel</a>
-</form>
-@if (ViewBag.ErrorMessage != null)
-{
-    <div style="color: red; margin-bottom: 10px;">
-        @ViewBag.ErrorMessage
-    </div>
-}
-<nav>
-    <a href="/CulturalHeritage">View Cultural Heritages</a> |
-    <a href="/Account/Logout">Logout</a>
-</nav>
+    <form method="post" action="@Url.Action("ConfirmDelete", new { id = Model.HeritageID })">
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+    </form>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mt-3">@ViewBag.ErrorMessage</div>
+    }
+
+    <!-- Navigation -->
+    <nav class="mt-4">
+        <a href="/Dashboard/AdminDashboard" class="btn btn-primary">Back to Admin Dashboard</a>
+    </nav>
+</div>

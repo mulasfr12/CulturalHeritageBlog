@@ -4,22 +4,28 @@
     ViewData["Title"] = "Cultural Heritage List";
 }
 
-<h1>Explore Cultural Heritage</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Explore Cultural Heritage</h1>
 
-<ul>
-    @foreach (var heritage in Model)
-    {
-        <li>
-            <a href="@Url.Action("Details", "CulturalHeritage", new { id = heritage.HeritageID })">
-                <strong>@heritage.Name</strong>
-            </a>
-            <p>@heritage.Description</p>
-            <p><strong>Location:</strong> @heritage.Location</p>
-            <p><strong>National Minority:</strong> @heritage.Name</p>
-        </li>
-    }
-</ul>
+    <div class="row">
+        @foreach (var heritage in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@heritage.Name</h5>
+                        <p class="card-text">@heritage.Description</p>
+                        <p class="small text-muted"><strong>Location:</strong> @heritage.Location</p>
+                        <p class="small text-muted"><strong>National Minority:</strong> @heritage.Name</p>
+                        <a href="@Url.Action("Details", "CulturalHeritage", new { id = heritage.HeritageID })" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
-<nav>
-    <a href="/Account/Logout">Logout</a>
-</nav>
+    <!-- Back to User Dashboard Navigation -->
+    <nav class="mt-4 text-center">
+        <a href="@Url.Action("UserDashboard", "Dashboard")" class="btn btn-lg btn-primary">Back to User Dashboard</a>
+    </nav>
+</div>

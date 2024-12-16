@@ -26,10 +26,34 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+
+                    <!-- Profile and Logout Buttons -->
+                    @{
+                        var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+                        var action = ViewContext.RouteData.Values["action"]?.ToString();
+
+                        if (!(controller == "Account" && (action == "Login" || action == "Register")))
+                        {
+                            <div class="d-flex align-items-center">
+                                <!-- Profile Button -->
+                                <a href="@Url.Action("Index", "UserProfile")" class="btn btn-outline-primary me-2">
+                                    Profile
+                                </a>
+
+                                <!-- Logout Button -->
+                                <form method="post" asp-controller="Account" asp-action="Logout" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

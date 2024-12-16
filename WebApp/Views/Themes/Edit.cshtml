@@ -1,15 +1,26 @@
 ﻿@model WebAPI.DTOs.ThemeDto
 
-<h1>Edit Theme</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-warning">Edit Theme</h1>
 
-<form method="post">
-    <input type="hidden" name="ThemeID" value="@Model.ThemeID" />
+    <form method="post" class="card p-4 shadow">
+        <input type="hidden" name="ThemeID" value="@Model.ThemeID" />
 
-    <label>Name:</label>
-    <input type="text" name="Name" value="@Model.Name" required />
+        <div class="mb-3">
+            <label class="form-label">Name:</label>
+            <input type="text" class="form-control" name="Name" value="@Model.Name" required />
+        </div>
 
-    <label>Description:</label>
-    <textarea name="Description">@Model.Description</textarea>
+        <div class="mb-3">
+            <label class="form-label">Description:</label>
+            <textarea class="form-control" name="Description" rows="3">@Model.Description</textarea>
+        </div>
 
-    <button type="submit" class="btn btn-success">Save Changes</button>
-</form>
+        <button type="submit" class="btn btn-warning">Save Changes</button>
+    </form>
+
+    <!-- Navigation -->
+    <nav class="mt-4 text-center">
+        <a href="/Dashboard/AdminDashboard" class="btn btn-primary">Back to Admin Dashboard</a>
+    </nav>
+</div>
