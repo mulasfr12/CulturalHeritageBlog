@@ -29,6 +29,21 @@ namespace WebAPI.Services
                 })
                 .ToListAsync();
         }
+        public async Task<CommentDto> GetCommentById(int commentId)
+        {
+            var comment = await _dbContext.Comments.FindAsync(commentId);
+
+            if (comment == null) return null;
+
+            return new CommentDto
+            {
+                CommentID = comment.CommentId,
+                Content = comment.Content,
+                UserID = comment.UserId,
+                HeritageID = comment.HeritageId,
+                CreatedAt = comment.CreatedAt
+            };
+        }
 
         public async Task<int> AddComment(CommentDto commentDto)
         {

@@ -22,7 +22,7 @@ namespace WebAPI.Services
             return await _dbContext.NationalMinorities
                 .Select(nm => new NationalMinorityDto
                 {
-                    MinorityID = nm.MinorityID,
+                    MinorityID = nm.MinorityId,
                     Name = nm.Name,
                     Description = nm.Description
                 })
@@ -36,7 +36,7 @@ namespace WebAPI.Services
 
             return new NationalMinorityDto
             {
-                MinorityID = minority.MinorityID,
+                MinorityID = minority.MinorityId,
                 Name = minority.Name,
                 Description = minority.Description
             };
@@ -53,7 +53,7 @@ namespace WebAPI.Services
             _dbContext.NationalMinorities.Add(minority);
             await _dbContext.SaveChangesAsync();
 
-            return minority.MinorityID;
+            return minority.MinorityId;
         }
 
         public async Task<bool> UpdateNationalMinority(int id, NationalMinorityDto nationalMinorityDto)

@@ -1,19 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Admin Dashboard";
-}
-
-<h1>Welcome to the Admin Dashboard</h1>
-<p>Here, you can manage cultural heritage data, users, and logs.</p>
-
-<ul>
-    <li><a href="/CulturalHeritage">Manage Cultural Heritage</a></li>
-    <li><a href="/Theme">Manage Themes</a></li>
-    <li><a href="/Logs">View Logs</a></li>
-</ul>
-
-<form method="post" action="/Account/Logout" style="display: inline;" onsubmit="return confirm('Are you sure you want to logout?');">
-    <button type="submit" style="background-color: #007BFF; color: white; padding: 10px; border: none; border-radius: 5px;">
-        Logout
-    </button>
-</form>
-
+﻿<nav>
+    <h1>Admin Dashboard</h1>
+    <ul>
+        <li><a href="/CulturalHeritage">Manage Cultural Heritage</a></li>
+        <li><a href="/NationalMinorities">Manage National Minorities</a></li>
+        <li><a href="/Themes">Manage Themes</a></li>
+        <li><a href="/CulturalHeritageThemes">Manage Themes for Cultural Heritage</a></li>
+        <li><a href="/Logs">View Logs</a></li>
+    </ul>
+</nav>

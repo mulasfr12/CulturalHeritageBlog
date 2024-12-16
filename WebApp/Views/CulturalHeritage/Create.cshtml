@@ -4,25 +4,43 @@
 
 <form method="post">
     <label>Name:</label>
-    <input type="text" name="Name" value="@Model.Name" required />
+    <input type="text" name="Name" value="@Model?.Name" required />
 
     <label>Description:</label>
-    <textarea name="Description">@Model.Description</textarea>
+    <textarea name="Description">@Model?.Description</textarea>
 
     <label>Location:</label>
-    <input type="text" name="Location" value="@Model.Location" />
+    <input type="text" name="Location" value="@Model?.Location" />
 
     <label>National Minority:</label>
-    <input type="text" name="NationalMinority" value="@Model.NationalMinority" />
+    <select name="NationalMinorityID" required>
+        <option value="">-- Select National Minority --</option>
+        @if (ViewBag.NationalMinorities != null)
+        {
+            foreach (var minority in (List<WebApp.ViewModels.NationalMinorityViewModel>)ViewBag.NationalMinorities)
+            {
+                if (Model?.NationalMinorityID == minority.MinorityID)
+                {
+                    <option value="@minority.MinorityID" selected>@minority.Name</option>
+                }
+                else
+                {
+                    <option value="@minority.MinorityID">@minority.Name</option>
+                }
+            }
+        }
+    </select>
 
     <button type="submit">Create</button>
 </form>
+
 @if (ViewBag.ErrorMessage != null)
 {
     <div style="color: red; margin-bottom: 10px;">
         @ViewBag.ErrorMessage
     </div>
 }
+
 
 <nav>
     <a href="/CulturalHeritage">View Cultural Heritages</a> |

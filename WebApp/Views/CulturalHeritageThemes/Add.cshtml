@@ -1,0 +1,38 @@
+﻿@model WebApp.ViewModels.ThemeViewModel
+
+<h1>Associate Theme with Cultural Heritage</h1>
+
+<form method="post">
+    <label for="heritageId">Select Cultural Heritage:</label>
+    <select id="heritageId" name="heritageId" required>
+        <option value="">-- Select a Cultural Heritage --</option>
+        @if (ViewBag.CulturalHeritages != null)
+        {
+            foreach (var heritage in ViewBag.CulturalHeritages)
+            {
+                <option value="@heritage.HeritageID">@heritage.Name</option>
+            }
+        }
+    </select>
+
+    <label for="themeId">Select Theme:</label>
+    <select id="themeId" name="themeId" required>
+        <option value="">-- Select a Theme --</option>
+        @if (ViewBag.AllThemes != null)
+        {
+            foreach (var theme in ViewBag.AllThemes)
+            {
+                <option value="@theme.ThemeID">@theme.Name</option>
+            }
+        }
+    </select>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" rows="3"></textarea>
+
+    <button type="submit">Add Theme to Cultural Heritage</button>
+</form>
+
+<nav>
+    <a href="/AdminDashboard">Back to Dashboard</a>
+</nav>

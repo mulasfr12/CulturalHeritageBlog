@@ -1,0 +1,96 @@
+﻿@model WebApp.ViewModels.CulturalHeritageDetailsViewModel
+
+<h1>@Model.Name</h1>
+<p>@Model.Description</p>
+<p>Location: @Model.Location</p>
+<p>National Minority: @Model.NationalMinorityName</p>
+
+<h2>Themes</h2>
+@if (Model.Themes != null && Model.Themes.Any())
+{
+    <ul>
+        @foreach (var theme in Model.Themes)
+        {
+            <li>@theme.Name - @theme.Description</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No themes available for this cultural heritage.</p>
+}
+
+<h2>Comments</h2>
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    <ul>
+        @foreach (var comment in Model.Comments)
+        {
+            <li>
+                <strong>User @comment.UserID:</strong> @comment.Content <br />
+                <small>@comment.CreatedAt.ToString("g")</small>
+                @if (ViewBag.UserID == comment.UserID)
+                {
+                    <form method="post" asp-action="DeleteComment" asp-route-id="@comment.CommentID" asp-route-heritageId="@Model.HeritageID">
+                        <button type="submit" style="color: red; border: none; background: none;">Delete</button>
+                    </form>
+                }
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No comments available for this cultural heritage.</p>
+}
+
+<h3>Leave a Comment</h3>
+<form id="commentForm">
+    <input type="hidden" id="heritageId" value="@Model.HeritageID" />
+    <textarea id="commentContent" rows="4" cols="50" placeholder="Write your comment here..." required></textarea>
+    <br />
+    <button type="button" onclick="submitComment()" style="margin-top: 10px;">Add Comment</button>
+</form>
+
+<script>
+    async function submitComment() {
+        const heritageId = document.getElementById("heritageId").value;
+        const content = document.getElementById("commentContent").value;
+
+        if (!content.trim()) {
+            alert("Comment content cannot be empty.");
+            return;
+        }
+
+        const payload = {
+            heritageId: heritageId,
+            content: content
+        };
+
+        try {
+            const response = await fetch('/api/Comment', { // Point to the WebAPI endpoint
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                window.location.reload(); // Reload the page on success
+            } else {
+                const result = await response.json();
+                alert(`Error: ${result.message || "Failed to add comment"}`);
+            }
+        } catch (error) {
+            console.error("Error submitting comment:", error);
+            alert("An unexpected error occurred.");
+        }
+    }
+</script>
+
+
+<nav>
+    <a href="/CulturalHeritage/UserIndex">Back to Cultural Heritage</a>
+</nav>

@@ -1,0 +1,15 @@
+﻿@model WebAPI.DTOs.ThemeDto
+
+<h1>Edit Theme</h1>
+
+<form method="post">
+    <input type="hidden" name="ThemeID" value="@Model.ThemeID" />
+
+    <label>Name:</label>
+    <input type="text" name="Name" value="@Model.Name" required />
+
+    <label>Description:</label>
+    <textarea name="Description">@Model.Description</textarea>
+
+    <button type="submit" class="btn btn-success">Save Changes</button>
+</form>

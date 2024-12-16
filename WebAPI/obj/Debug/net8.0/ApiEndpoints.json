@@ -65,6 +65,22 @@
   },
   {
     "ContainingType": "WebAPI.Controllers.CommentController",
+    "Method": "GetCommentById",
+    "RelativePath": "api/Comment/{commentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "commentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebAPI.Controllers.CommentController",
     "Method": "UpdateComment",
     "RelativePath": "api/Comment/{commentId}",
     "HttpMethod": "PUT",
@@ -233,6 +249,85 @@
         "Name": "count",
         "Type": "System.Int32",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebAPI.Controllers.NationalMinorityController",
+    "Method": "GetAll",
+    "RelativePath": "api/NationalMinority",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebAPI.Controllers.NationalMinorityController",
+    "Method": "Create",
+    "RelativePath": "api/NationalMinority",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "minorityDto",
+        "Type": "WebAPI.DTOs.NationalMinorityDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebAPI.Controllers.NationalMinorityController",
+    "Method": "GetById",
+    "RelativePath": "api/NationalMinority/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebAPI.Controllers.NationalMinorityController",
+    "Method": "Update",
+    "RelativePath": "api/NationalMinority/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "minorityDto",
+        "Type": "WebAPI.DTOs.NationalMinorityDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebAPI.Controllers.NationalMinorityController",
+    "Method": "Delete",
+    "RelativePath": "api/NationalMinority/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

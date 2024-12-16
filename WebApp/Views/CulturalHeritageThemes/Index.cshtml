@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WebAPI.DTOs.ThemeDto>
+
+<h1>Manage Themes for Cultural Heritage</h1>
+
+<a href="/CulturalHeritageThemes/Add?heritageId=@ViewBag.HeritageId" class="btn btn-primary">Add Theme</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var theme in Model)
+        {
+            <tr>
+                <td>@theme.Name</td>
+                <td>@theme.Description</td>
+                <td>
+                    <form method="post" action="/CulturalHeritageThemes/Remove">
+                        <input type="hidden" name="heritageId" value="@ViewBag.HeritageId" />
+                        <input type="hidden" name="themeId" value="@theme.ThemeID" />
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

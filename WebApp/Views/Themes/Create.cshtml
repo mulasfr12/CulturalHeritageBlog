@@ -1,0 +1,13 @@
+﻿@model WebAPI.DTOs.ThemeDto
+
+<h1>Create Theme</h1>
+
+<form method="post">
+    <label>Name:</label>
+    <input type="text" name="Name" value="@Model.Name" required />
+
+    <label>Description:</label>
+    <textarea name="Description">@Model.Description</textarea>
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>

@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<CulturalHeritageDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICulturalHeritageService, CulturalHeritageService>();
@@ -20,6 +21,7 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<ILogServices, LogService>();
 builder.Services.AddScoped<IThemeService, ThemeService>();
 builder.Services.AddScoped<INationalMinorityService, NationalMinorityService>();
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -71,13 +73,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowMvcApp",
-//        policy => policy.WithOrigins("http://localhost:5140", "https://localhost:7106") // Ports for MVC project
-//                       .AllowAnyHeader()
-//                       .AllowAnyMethod());
-//});
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -102,6 +98,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 app.UseRouting();
 app.UseAuthentication();

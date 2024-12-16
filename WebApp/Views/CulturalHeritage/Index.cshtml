@@ -3,11 +3,23 @@
 <h1>Cultural Heritage Management</h1>
 
 <form method="get">
-    <input type="text" name="search" placeholder="Search..." value="@Model.Search" />
+    <input type="text" name="search" placeholder="Search by name" value="@Model.Search" />
     <select name="nationalMinority">
-        <option value="">All National Minorities</option>
-        <!-- Add options dynamically if available -->
+        <option value="">-- Select National Minority --</option>
+        @foreach (var minority in Model.NationalMinorities)
+        {
+            if (Model.NationalMinority == minority.MinorityID)
+            {
+                <option value="@minority.MinorityID" selected>@minority.Name</option>
+            }
+            else
+            {
+                <option value="@minority.MinorityID">@minority.Name</option>
+            }
+        }
     </select>
+
+
     <button type="submit">Search</button>
 </form>
 
@@ -28,7 +40,7 @@
                 <td>@heritage.Name</td>
                 <td>@heritage.Description</td>
                 <td>@heritage.Location</td>
-                <td>@heritage.NationalMinority</td>
+                <td>@heritage.NationalMinorityName</td>
                 <td>
                     <a href="@Url.Action("Edit", new { id = heritage.HeritageID })">Edit</a> |
                     <a href="@Url.Action("Delete", new { id = heritage.HeritageID })">Delete</a>

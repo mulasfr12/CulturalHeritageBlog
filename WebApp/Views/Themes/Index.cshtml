@@ -1,0 +1,28 @@
+﻿@model IEnumerable<WebAPI.DTOs.ThemeDto>
+
+<h1>Manage Themes</h1>
+
+<a href="/Themes/Create" class="btn btn-primary">Add New Theme</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var theme in Model)
+        {
+            <tr>
+                <td>@theme.Name</td>
+                <td>@theme.Description</td>
+                <td>
+                    <a href="/Themes/Edit/@theme.ThemeID" class="btn btn-warning">Edit</a>
+                    <a href="/Themes/Delete/@theme.ThemeID" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

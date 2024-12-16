@@ -8,5 +8,6 @@ namespace WebAPI.Services.Interfaces
         Task<int> AddComment(CommentDto commentDto);
         Task<bool> UpdateComment(int commentId, CommentDto commentDto);
         Task<bool> DeleteComment(int commentId);
+        Task<CommentDto> GetCommentById(int commentId);
     }
 }

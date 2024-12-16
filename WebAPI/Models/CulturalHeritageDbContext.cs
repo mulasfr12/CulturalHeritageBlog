@@ -25,10 +25,11 @@ public partial class CulturalHeritageDbContext : DbContext
 
     public virtual DbSet<Log> Logs { get; set; }
 
+    public virtual DbSet<NationalMinority> NationalMinorities { get; set; }
+
     public virtual DbSet<Theme> Themes { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<NationalMinority> NationalMinorities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -70,30 +71,31 @@ public partial class CulturalHeritageDbContext : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.Location).HasMaxLength(200);
             entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.NationalMinority).HasMaxLength(100);
+            entity.Property(e => e.NationalMinorityId).HasColumnName("NationalMinorityID");
+
+            entity.HasOne(d => d.NationalMinority).WithMany(p => p.CulturalHeritages)
+                .HasForeignKey(d => d.NationalMinorityId)
+                .HasConstraintName("FK_CulturalHeritage_NationalMinority");
         });
 
         modelBuilder.Entity<CulturalHeritageTheme>(entity =>
         {
-            // Explicitly map the table name to "CulturalHeritageTheme"
+            entity.HasKey(e => new { e.HeritageId, e.ThemeId }).HasName("PK__Cultural__AC7A7B5D487625F6");
+
             entity.ToTable("CulturalHeritageTheme");
 
-            // Configure the composite primary key
-            entity.HasKey(ct => new { ct.HeritageId, ct.ThemeId });
+            entity.Property(e => e.HeritageId).HasColumnName("HeritageID");
+            entity.Property(e => e.ThemeId).HasColumnName("ThemeID");
 
-            // Configure relationships
-            entity.HasOne(ct => ct.Heritage)
-                .WithMany(ch => ch.CulturalHeritageThemes)
-                .HasForeignKey(ct => ct.HeritageId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_CulturalHeritageTheme_CulturalHeritage");
+            entity.HasOne(d => d.Heritage).WithMany(p => p.CulturalHeritageThemes)
+                .HasForeignKey(d => d.HeritageId)
+                .HasConstraintName("FK__CulturalH__Herit__4316F928");
 
-            entity.HasOne(ct => ct.Theme)
-                .WithMany(t => t.CulturalHeritageThemes)
-                .HasForeignKey(ct => ct.ThemeId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_CulturalHeritageTheme_Theme");
+            entity.HasOne(d => d.Theme).WithMany(p => p.CulturalHeritageThemes)
+                .HasForeignKey(d => d.ThemeId)
+                .HasConstraintName("FK__CulturalH__Theme__440B1D61");
         });
+
         modelBuilder.Entity<HeritageImage>(entity =>
         {
             entity.HasKey(e => e.ImageId).HasName("PK__Heritage__7516F4ECCB54019B");
@@ -129,15 +131,25 @@ public partial class CulturalHeritageDbContext : DbContext
                 .HasConstraintName("FK__Log__UserID__4CA06362");
         });
 
+        modelBuilder.Entity<NationalMinority>(entity =>
+        {
+            entity.HasKey(e => e.MinorityId).HasName("PK__National__E156620A1AC8482B");
+
+            entity.ToTable("NationalMinority");
+
+            entity.Property(e => e.MinorityId).HasColumnName("MinorityID");
+            entity.Property(e => e.Name).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<Theme>(entity =>
         {
-            entity.HasKey(e => e.ThemeID).HasName("PK__Theme__FBB3E4B9F4118FF9");
+            entity.HasKey(e => e.ThemeId).HasName("PK__Theme__FBB3E4B9F4118FF9");
 
             entity.ToTable("Theme");
 
             entity.HasIndex(e => e.Name, "UQ__Theme__737584F65DE0B1FE").IsUnique();
 
-            entity.Property(e => e.ThemeID).HasColumnName("ThemeID");
+            entity.Property(e => e.ThemeId).HasColumnName("ThemeID");
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(100);
         });

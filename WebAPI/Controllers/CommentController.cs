@@ -26,6 +26,18 @@ namespace WebAPI.Controllers
             var comments = await _commentService.GetCommentsByCulturalHeritageId(heritageId);
             return Ok(comments);
         }
+        [HttpGet("{commentId}")]
+        [Authorize]
+        public async Task<IActionResult> GetCommentById(int commentId)
+        {
+            var comment = await _commentService.GetCommentById(commentId);
+            if (comment == null)
+            {
+                return NotFound(new { message = "Comment not found." });
+            }
+
+            return Ok(comment);
+        }
 
         // POST: api/comment
         [HttpPost]

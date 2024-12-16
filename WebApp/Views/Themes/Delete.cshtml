@@ -1,0 +1,10 @@
+﻿@model WebAPI.DTOs.ThemeDto
+
+<h1>Delete Theme</h1>
+
+<p>Are you sure you want to delete the theme <strong>@Model.Name</strong>?</p>
+
+<form method="post" action="/Themes/ConfirmDelete/@Model.ThemeID">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="/Themes" class="btn btn-secondary">Cancel</a>
+</form>

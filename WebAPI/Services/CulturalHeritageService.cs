@@ -22,45 +22,52 @@ namespace WebAPI.Services
                 .Where(ch => ch.Name.Contains(name))
                 .Include(ch => ch.CulturalHeritageThemes) // Navigate through the join table
                     .ThenInclude(ct => ct.Theme)
+                .Include(ch => ch.NationalMinority) // Include National Minority for display
                 .Select(ch => new CulturalHeritageDto
                 {
                     HeritageID = ch.HeritageId,
                     Name = ch.Name,
                     Description = ch.Description,
                     Location = ch.Location,
-                    NationalMinority = ch.NationalMinority,
+                    NationalMinorityID = ch.NationalMinorityId,
+                    NationalMinorityName = ch.NationalMinority != null ? ch.NationalMinority.Name : null, // Avoid ?. operator
                     Themes = ch.CulturalHeritageThemes.Select(ct => new ThemeDto
                     {
-                        ThemeID = ct.Theme.ThemeID,
+                        ThemeID = ct.Theme.ThemeId,
                         Name = ct.Theme.Name,
                         Description = ct.Theme.Description
                     }).ToList()
                 })
                 .ToListAsync();
         }
+
+
         public async Task<bool> IsNameUniqueAsync(string name, int? id = null)
         {
             return !await _dbContext.CulturalHeritages
-                .AnyAsync(ch => ch.Name.Equals(name, StringComparison.OrdinalIgnoreCase)
-                                && (!id.HasValue || ch.HeritageId != id));
+                .AnyAsync(ch => ch.Name.ToLower() == name.ToLower() && (!id.HasValue || ch.HeritageId != id));
         }
+
+
 
         [HttpGet]
         public async Task<IEnumerable<CulturalHeritageDto>> GetAllCulturalHeritages()
         {
             return await _dbContext.CulturalHeritages
                 .Include(ch => ch.CulturalHeritageThemes) // Include join table
-                    .ThenInclude(ct => ct.Theme)        // Include related themes
+                    .ThenInclude(ct => ct.Theme)
+                .Include(ch => ch.NationalMinority) // Include National Minority for display
                 .Select(ch => new CulturalHeritageDto
                 {
                     HeritageID = ch.HeritageId,
                     Name = ch.Name,
                     Description = ch.Description,
                     Location = ch.Location,
-                    NationalMinority = ch.NationalMinority,
+                    NationalMinorityID = ch.NationalMinorityId,
+                    NationalMinorityName = ch.NationalMinority != null ? ch.NationalMinority.Name : null, // Avoid ?. operator
                     Themes = ch.CulturalHeritageThemes.Select(ct => new ThemeDto
                     {
-                        ThemeID = ct.Theme.ThemeID, // Match with updated Theme class
+                        ThemeID = ct.Theme.ThemeId,
                         Name = ct.Theme.Name,
                         Description = ct.Theme.Description
                     }).ToList()
@@ -68,13 +75,14 @@ namespace WebAPI.Services
                 .ToListAsync();
         }
 
+
+
         [HttpGet("{id}")]
-        public async Task<CulturalHeritageDto?> GetCulturalHeritageById(int heritageId)
+        public async Task<CulturalHeritageDto?> GetCulturalHeritageById(int id)
         {
             var heritage = await _dbContext.CulturalHeritages
-                .Include(ch => ch.CulturalHeritageThemes) // Navigate through the join table
-                    .ThenInclude(ct => ct.Theme)
-                .FirstOrDefaultAsync(ch => ch.HeritageId == heritageId);
+                .Include(ch => ch.NationalMinority)
+                .FirstOrDefaultAsync(ch => ch.HeritageId == id);
 
             if (heritage == null) return null;
 
@@ -84,28 +92,24 @@ namespace WebAPI.Services
                 Name = heritage.Name,
                 Description = heritage.Description,
                 Location = heritage.Location,
-                NationalMinority = heritage.NationalMinority,
-                Themes = heritage.CulturalHeritageThemes.Select(ct => new ThemeDto
-                {
-                    ThemeID = ct.Theme.ThemeID,
-                    Name = ct.Theme.Name,
-                    Description = ct.Theme.Description
-                }).ToList()
+                CreatedAt = heritage.CreatedAt,
+                NationalMinorityID = heritage.NationalMinorityId,
+                NationalMinorityName = heritage.NationalMinority?.Name // For display
             };
         }
 
+
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<int> CreateCulturalHeritage(CulturalHeritageDto heritageDto)
+        public async Task<int> CreateCulturalHeritage(CulturalHeritageDto culturalHeritageDto)
         {
-
             var heritage = new CulturalHeritage
             {
-                Name = heritageDto.Name,
-                Description = heritageDto.Description,
-                Location = heritageDto.Location,
-                NationalMinority = heritageDto.NationalMinority,
-                CreatedAt = DateTime.UtcNow
+                Name = culturalHeritageDto.Name,
+                Description = culturalHeritageDto.Description,
+                Location = culturalHeritageDto.Location,
+                CreatedAt = DateTime.UtcNow,
+                NationalMinorityId = culturalHeritageDto.NationalMinorityID // Updated
             };
 
             _dbContext.CulturalHeritages.Add(heritage);
@@ -113,22 +117,34 @@ namespace WebAPI.Services
 
             return heritage.HeritageId;
         }
+
+
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<bool> UpdateCulturalHeritage(int heritageId, CulturalHeritageDto heritageDto)
         {
-            var heritage = await _dbContext.CulturalHeritages.FindAsync(heritageId);
 
-            if (heritage == null) return false;
+            try
+            {
+                var heritage = await _dbContext.CulturalHeritages.FindAsync(heritageId);
+                if (heritage == null) return false;
 
-            heritage.Name = heritageDto.Name;
-            heritage.Description = heritageDto.Description;
-            heritage.Location = heritageDto.Location;
-            heritage.NationalMinority = heritageDto.NationalMinority;
+                heritage.Name = heritageDto.Name;
+                heritage.Description = heritageDto.Description;
+                heritage.Location = heritageDto.Location;
+                heritage.NationalMinorityId = heritageDto.NationalMinorityID;
 
-            await _dbContext.SaveChangesAsync();
-            return true;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during update: {ex.Message}");
+                return false;
+            }
         }
+
+
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<bool> DeleteCulturalHeritage(int heritageId)

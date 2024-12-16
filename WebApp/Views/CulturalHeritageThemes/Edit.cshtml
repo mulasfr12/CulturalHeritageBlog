@@ -1,0 +1,63 @@
+﻿@model List<WebApp.ViewModels.ThemeViewModel>
+
+<h1>Edit Themes for "@ViewBag.CurrentHeritage"</h1>
+
+<form method="get" action="/CulturalHeritageThemes/Edit">
+    <label for="heritageId">Select Cultural Heritage:</label>
+    <select id="heritageId" name="heritageId" onchange="this.form.submit()">
+        <option value="">-- Select Cultural Heritage --</option>
+        @if (ViewBag.CulturalHeritages != null)
+        {
+            foreach (var heritage in ViewBag.CulturalHeritages)
+            {
+                if (ViewBag.CurrentHeritageID == heritage.HeritageID)
+                {
+                    <option value="@heritage.HeritageID" selected>@heritage.Name</option>
+                }
+                else
+                {
+                    <option value="@heritage.HeritageID">@heritage.Name</option>
+                }
+            }
+        }
+    </select>
+
+</form>
+
+@if (Model != null && Model.Count > 0)
+{
+    <h2>Themes Associated with "@ViewBag.CurrentHeritage":</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var theme in Model)
+            {
+                <tr>
+                    <td>@theme.Name</td>
+                    <td>@theme.Description</td>
+                    <td>
+                        <form method="post" action="/CulturalHeritageThemes/RemoveTheme">
+                            <input type="hidden" name="heritageId" value="@ViewBag.CurrentHeritageID" />
+                            <input type="hidden" name="themeId" value="@theme.ThemeID" />
+                            <button type="submit">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No themes associated with this cultural heritage.</p>
+}
+
+<nav>
+    <a href="/AdminDashboard">Back to Dashboard</a>
+</nav>

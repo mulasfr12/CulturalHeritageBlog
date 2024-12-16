@@ -1,0 +1,25 @@
+﻿@model List<WebApp.ViewModels.CulturalHeritageViewModel>
+
+@{
+    ViewData["Title"] = "Cultural Heritage List";
+}
+
+<h1>Explore Cultural Heritage</h1>
+
+<ul>
+    @foreach (var heritage in Model)
+    {
+        <li>
+            <a href="@Url.Action("Details", "CulturalHeritage", new { id = heritage.HeritageID })">
+                <strong>@heritage.Name</strong>
+            </a>
+            <p>@heritage.Description</p>
+            <p><strong>Location:</strong> @heritage.Location</p>
+            <p><strong>National Minority:</strong> @heritage.Name</p>
+        </li>
+    }
+</ul>
+
+<nav>
+    <a href="/Account/Logout">Logout</a>
+</nav>

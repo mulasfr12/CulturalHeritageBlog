@@ -104,15 +104,25 @@ namespace WebAPI.Controllers
 
                 var userId = int.Parse(userClaim.Value);
 
-                // Check for name uniqueness, excluding the current entity
+                // Validate input
+                if (string.IsNullOrWhiteSpace(culturalHeritageDto.Name))
+                {
+                    return BadRequest(new { message = "Name is required." });
+                }
+
+                if (culturalHeritageDto.NationalMinorityID == null)
+                {
+                    return BadRequest(new { message = "National Minority ID is required." });
+                }
+
+                // Check if name is unique
                 if (!await _culturalHeritageService.IsNameUniqueAsync(culturalHeritageDto.Name, id))
                 {
-                    Console.WriteLine("Duplicate name detected on update: " + culturalHeritageDto.Name);
                     await _logServices.AddLog($"Attempt to update cultural heritage with id={id} to a duplicate name: {culturalHeritageDto.Name}.", userId);
                     return BadRequest(new { message = "A cultural heritage with this name already exists." });
                 }
 
-
+                // Update cultural heritage
                 var result = await _culturalHeritageService.UpdateCulturalHeritage(id, culturalHeritageDto);
 
                 if (!result)
@@ -126,12 +136,13 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                var userId = int.Parse(User.Claims.First(c => c.Type == "UserID").Value);
-                await _logServices.AddLog($"Error while updating cultural heritage with id={id}: {ex.Message}", userId);
-
-                return StatusCode(500, "Internal server error");
+                Console.WriteLine($"Error during update: {ex.Message}");
+                var userId = User.Claims.FirstOrDefault(c => c.Type == "UserID")?.Value ?? "Unknown";
+                await _logServices.AddLog($"Error while updating cultural heritage with id={id}: {ex.Message}", int.Parse(userId));
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
             }
         }
+
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
