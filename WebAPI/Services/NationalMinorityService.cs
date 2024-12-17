@@ -70,12 +70,20 @@ namespace WebAPI.Services
 
         public async Task<bool> DeleteNationalMinority(int id)
         {
-            var minority = await _dbContext.NationalMinorities.FindAsync(id);
+            var minority = await _dbContext.NationalMinorities
+                                .Include(nm => nm.CulturalHeritages) // Include related entities
+                                .FirstOrDefaultAsync(nm => nm.MinorityId == id);
             if (minority == null) return false;
+
+            if (minority.CulturalHeritages.Any())
+            {
+                throw new InvalidOperationException("Cannot delete National Minority because it has associated Cultural Heritage records.");
+            }
 
             _dbContext.NationalMinorities.Remove(minority);
             await _dbContext.SaveChangesAsync();
             return true;
         }
+
     }
 }

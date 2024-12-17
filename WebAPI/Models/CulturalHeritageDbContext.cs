@@ -139,6 +139,7 @@ public partial class CulturalHeritageDbContext : DbContext
 
             entity.Property(e => e.MinorityId).HasColumnName("MinorityID");
             entity.Property(e => e.Name).HasMaxLength(100);
+            
         });
 
         modelBuilder.Entity<Theme>(entity =>

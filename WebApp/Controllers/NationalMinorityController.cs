@@ -75,8 +75,24 @@ namespace CulturalHeritageWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
-            await _nationalMinorityService.DeleteNationalMinority(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var result = await _nationalMinorityService.DeleteNationalMinority(id);
+                if (!result)
+                {
+                    TempData["ErrorMessage"] = "Failed to delete. National Minority not found.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                TempData["SuccessMessage"] = "National Minority deleted successfully.";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error: {ex.Message}";
+                return RedirectToAction(nameof(Index));
+            }
         }
+
     }
 }

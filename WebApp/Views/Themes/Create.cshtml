@@ -1,13 +1,33 @@
 ﻿@model WebAPI.DTOs.ThemeDto
 
-<h1>Create Theme</h1>
+@{
+    ViewData["Title"] = "Create Theme";
+}
 
-<form method="post">
-    <label>Name:</label>
-    <input type="text" name="Name" value="@Model.Name" required />
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center mb-4">Create Theme</h1>
 
-    <label>Description:</label>
-    <textarea name="Description">@Model.Description</textarea>
+            <form method="post" class="p-4 border rounded shadow bg-light">
+                <div class="mb-3">
+                    <label for="Name" class="form-label fw-bold">Theme Name</label>
+                    <input type="text" id="Name" name="Name" class="form-control" placeholder="Enter theme name" value="@Model?.Name" required />
+                </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
-</form>
+                <div class="mb-3">
+                    <label for="Description" class="form-label fw-bold">Description</label>
+                    <textarea id="Description" name="Description" class="form-control" rows="4" placeholder="Enter theme description">@Model?.Description</textarea>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Save Theme</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="@Url.Action("Index", "Themes")" class="btn btn-secondary">Back to Themes</a>
+            </div>
+        </div>
+    </div>
+</div>

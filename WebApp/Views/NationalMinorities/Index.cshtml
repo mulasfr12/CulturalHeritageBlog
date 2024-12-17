@@ -24,5 +24,19 @@
         }
     </tbody>
 </table>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
 
 <a asp-action="Create" class="btn btn-success">Create New</a>
+
+<nav class="mt-4">
+    <a href="/Dashboard/AdminDashboard" class="btn btn-primary">Back to Admin Dashboard</a>
+    <a href="/CulturalHeritage" class="btn btn-secondary">View Cultural Heritages</a>
+</nav>

@@ -73,13 +73,19 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var deleted = await _nationalMinorityService.DeleteNationalMinority(id);
-            if (!deleted)
+            try
             {
-                return NotFound(new { message = "National Minority not found." });
-            }
+                var deleted = await _nationalMinorityService.DeleteNationalMinority(id);
+                if (!deleted)
+                    return NotFound(new { message = "National Minority not found." });
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
+
     }
 }
